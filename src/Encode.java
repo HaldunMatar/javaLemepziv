@@ -17,16 +17,16 @@ class Encode{
   this.lengthStream=stream.length() ;
   dictionary = new String[lengthStream+3] ;
   dictionary[1]="0" ;
-  dictionaryMap.put(Integer.valueOf(1), "0");
+ // dictionaryMap.put(Integer.valueOf(1), "0");
   dictionary[2]="1" ;
-  dictionaryMap.put(Integer.valueOf(2), "1");
+ // dictionaryMap.put(Integer.valueOf(2), "1");
  }
  HashMap  enCodeStage1(String stream ){
   String   result1  = "";
   String   substring ;
   int index1=0 ;
   int index2=0  ;
-  int indexdec=3  ;
+  int indexdec=1  ;
   while (index2 <= stream.length()-1) {
    if(index1==index2) {
     substring =  stream.charAt(index1) + "";
@@ -56,17 +56,26 @@ class Encode{
     String value = null ;
   dictionaryMap.forEach(       (k, v) -> 
   {
-   if(   !k.equals( Integer.valueOf(1))    &&     !k.equals( Integer.valueOf(2) )   )  
-   {
+  // if(   !k.equals( Integer.valueOf(1))    &&     !k.equals( Integer.valueOf(2) )   )  
+  // {
        String  temp = v ;
-       String  lastchar = v.substring(v.length() - 1).equals("0")  ? "1" : "2";
+      // String  lastchar = v.substring(v.length() - 1).equals("0")  ? "1" : "2";
+       
+       Integer  lastchar =  getKey(dictionaryMap ,v.substring(v.length() - 1));
        String  remain = v.substring(0,v.length() - 1);
        dictionaryMap.values().contains(remain) ;
-              getKey(dictionaryMap ,remain) ;
-    String  nucell =  getKey(dictionaryMap ,remain) + lastchar ;
+      
+       String  nucell ;
+             if(getKey(dictionaryMap ,remain) !=null)
+            	   nucell =  getKey(dictionaryMap ,remain) + lastchar.toString() ;
+             else
+            	 
+            	   nucell =   lastchar.toString() ;
+              
+    //String  nucell =  getKey(dictionaryMap ,remain) + lastchar.toString() ;
        // System.out.println(k + " "     +  nucell +  "   "+    v  + " " + remain  + "  " +  getKey(dictionaryMap ,remain).toString()     +  "   " + dictionaryMap.values().contains(remain) ) ;
-        numericalMap.put(Integer.valueOf(k-2), nucell);
-   }  
+        numericalMap.put(Integer.valueOf(k), nucell);
+   //}  
      }
     );
   return numericalMap;  
@@ -104,9 +113,11 @@ class Encode{
 				(k, v) -> 
 		 
 		 {
+			 String  strInt;	
+			if( v.length()>1	)
 				
-			 
-			String  strInt= v.substring(0,v.length()-1);
+			{ 
+			  strInt= v.substring(0,v.length()-1);
 			int  intoBinary1 =   Integer.valueOf(strInt).intValue();
 			 
 			 
@@ -117,6 +128,7 @@ class Encode{
 				
 				 
 			 }
+		 }
 			 			 
 		 }
 		 	 
@@ -139,30 +151,49 @@ class Encode{
 				 
 					
 				 String  oneOrTowString = v.substring(v.length()-1);
+				 
+				 
+				 oneOrTowString =dictionaryMap.get(Integer.parseInt(oneOrTowString)) ;
 				// System.out.println(oneOrTowString);
+				 
+				 
+				 
+			
 				 
 			
 				
-				if (oneOrTowString.equals("1"))
+			/*	if (oneOrTowString.equals("1"))
 					
 					oneOrTowString="0" ;
 				else 
-					oneOrTowString="1" ;
+					oneOrTowString="1" ;*/
+				
+				
+				if(v.length()>1)
+				{
 				
 				String  intoBinary2 = v.substring(0,v.length()-1);
 				
 				   String encodeElemen = intToBinary(Integer.parseInt(intoBinary2)  , Integer.toBinaryString( DecimalMaxValue.get()).length()  ) + oneOrTowString ;
 				   
-				  String   finalResult1 =encodeElemen +   encodeElemen ;
-				  
+				
+				   
+				 
 				  
 				  encodeMap.put(Integer.valueOf(k), encodeElemen);
+				  
+				}else {
+					
+					
+					  
+					  
+					  encodeMap.put(Integer.valueOf(k), oneOrTowString);
+					
+				}
 				
 				
 				  
-				  resList.add(encodeElemen) ;
-				  
-				    strbul.append(encodeElemen) ;
+				
 				
 				  
 	
