@@ -28,7 +28,7 @@ public static void main(String[] args) {
 	int minimum = 0;
 	
 	int  randomNumLength = 0 ;
-	int   stringLength = startLength ;
+	int   stringLength = minimumLength ;
 	
 	 
 	for(int i=0;i< numberOfSample ;i++){
